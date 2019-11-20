@@ -13,6 +13,7 @@ app.set('view engine', 'pug') // set engine dung cho cac file view
 // use
 app.use(express.json()) // for parsing application/json
 app.use(express.urlencoded({ extended: true })) // for parsing application/x-www-form-urlencoded
+app.use(express.static('public'))
 
 // use - route
 app.use('/users', userRoute)
