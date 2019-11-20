@@ -1,0 +1,11 @@
+h1 Users
+
+a(href='/users/create')  Create users
+
+form(action='/users/search', method='GET')
+	input(type='text', name='searchValue', value = searchValue)
+	button Search
+
+ul
+	each user in users
+		li= user.name

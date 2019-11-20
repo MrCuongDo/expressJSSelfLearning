@@ -1,0 +1,12 @@
+h1 Create User
+
+a(href='/users') Users
+
+form(action='/users/create', method='POST')
+	label(for='username') Name
+	input(type='text', name='username')
+	label(for='phone') phone
+	input(type='number', name='phone')
+	label(for='email') Email
+	input(type='email', name='email')
+	button Create
