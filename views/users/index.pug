@@ -1,8 +1,9 @@
 extends ../layout/common
 
 block content
+
 	h1 Users
-	a(href='/users/create')  Create users
+	a.btn.btn-warning.my-2(href='/users/create')  Create users
 
 
 	form(action='/users/search', method='GET')
@@ -10,8 +11,16 @@ block content
 			input(type='text', name='searchValue', value = searchValue, class='form-control')
 			button(class='btn btn-primary ml-2', type='submit') Search
 
-	ul
+	table.table.table-bordered
+		tr
+			th Name
+			th Phone
+			th Email
+			th Action
 		each user in users
-			li
-				span= user.name + ' - ' + user.phone +' - '+ user.email
-				a(href='/users/'+ user.id, class='ml-2') View
+			tr
+				td= user.name 
+				td= user.phone 
+				td= user.email
+				td
+					a.badge.badge-primary(href='/users/'+ user.id, class='ml-2') View

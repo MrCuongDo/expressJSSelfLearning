@@ -3,13 +3,16 @@ extends ../layout/common
 block content
 	h1 Create User
 
-	a(href='/users',  class='my-4') Users
+	if errors
+		each error in errors
+			.alert.alert-danger= error
+
 	.form-group
 		form(action='/users/create', method='POST')
-			label(for='username') Name
-			input(type='text', name='name', class='form-control')
+			label(for='name') Name
+			input#name(type='text', name='name', class='form-control', value= values? values.name : '')
 			label(for='phone') phone
-			input(type='number', name='phone', class='form-control')
+			input#phone(type='number', name='phone', class='form-control',value= values? values.phone : '')
 			label(for='email') Email
-			input(type='email', name='email', class='form-control')
+			input#email(type='email', name='email', class='form-control',value=values?  values.email: '')
 			button(class='btn btn-danger my-2') Create
