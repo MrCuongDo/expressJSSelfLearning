@@ -1,9 +1,16 @@
 // require
 var express = require('express')
+var low = require('lowdb')
+var FileSync = require('lowdb/adapters/FileSync')
 
 // constant
 var app = express()
 var port = 8080
+var adapter = new FileSync('db.json')
+var db = low(adapter)
+// Set some defaults (required if your JSON file is empty)
+db.defaults({users: []})
+  .write()
 
 // set 
 app.set('views', './views')	// set thu muc goc cua cac file view
@@ -20,22 +27,17 @@ app.get('/', function(req, res) {
 	})
 })
 
-var users = [
-		{id: 1, name: 'Cuong'},
-		{id: 2, name: 'Binh'}
-]
-
 app.get('/users', function(req, res) {
 	res.render('users', {
-		users: users
+		users: db.get('users').value()
 	})
 })
 
 app.get('/users/search', function(req, res) {
 	// req.query lay cac parameters duoc truyen vao tu link vi du users/search?q=Cuong
 	var searchValue = req.query.searchValue 
-	var matchedUsers = users.filter(function(user){
-		return user.name.indexOf(searchValue) !== -1
+	var matchedUsers = db.get('users').value().filter(function(user){
+		return user.username.toLowerCase().indexOf(searchValue.toLowerCase()) !== -1
 	})
 	res.render('users', {
 		users: matchedUsers,
@@ -48,13 +50,8 @@ app.get ('/users/create', function (req, res) {
 })
 
 app.post('/users/create', function(req, res){
-	res.send(req.body)
-	var name = req.body.username
-	var phone = req.body.phone
-	var email = req.body.email
-
-	users.push({id: 99, name: name})
-	res.redirect('/users')
+	db.get('users').push(req.body).write()
+	res.redirect('/users') // redirect den trang users sau khi post
 })
 
 app.listen(port, function (){

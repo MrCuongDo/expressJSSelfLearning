@@ -8,4 +8,4 @@ form(action='/users/search', method='GET')
 
 ul
 	each user in users
-		li= user.name
+		li= user.username + ' - ' + user.phone +' - '+ user.email
