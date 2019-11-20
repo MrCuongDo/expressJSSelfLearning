@@ -1,13 +1,17 @@
-h1 Users
+extends ../layout/common
 
-a(href='/users/create')  Create users
+block content
+	h1 Users
+	a(href='/users/create')  Create users
 
-form(action='/users/search', method='GET')
-	input(type='text', name='searchValue', value = searchValue)
-	button Search
 
-ul
-	each user in users
-		li
-			span= user.name + ' - ' + user.phone +' - '+ user.email
-			a(href='/users/'+user.id) View
+	form(action='/users/search', method='GET')
+		.form-inline
+			input(type='text', name='searchValue', value = searchValue, class='form-control')
+			button(class='btn btn-primary ml-2', type='submit') Search
+
+	ul
+		each user in users
+			li
+				span= user.name + ' - ' + user.phone +' - '+ user.email
+				a(href='/users/'+ user.id, class='ml-2') View

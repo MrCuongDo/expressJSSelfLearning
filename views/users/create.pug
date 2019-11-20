@@ -1,12 +1,15 @@
-h1 Create User
+extends ../layout/common
 
-a(href='/users') Users
+block content
+	h1 Create User
 
-form(action='/users/create', method='POST')
-	label(for='username') Name
-	input(type='text', name='name')
-	label(for='phone') phone
-	input(type='number', name='phone')
-	label(for='email') Email
-	input(type='email', name='email')
-	button Create
+	a(href='/users') Users
+	.form-group
+	form(action='/users/create', method='POST')
+		label(for='username') Name
+		input(type='text', name='name', class='form-control')
+		label(for='phone') phone
+		input(type='number', name='phone', class='form-control')
+		label(for='email') Email
+		input(type='email', name='email', class='form-control')
+		button Create
