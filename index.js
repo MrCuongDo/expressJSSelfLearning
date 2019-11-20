@@ -2,6 +2,7 @@
 var express = require('express')
 var low = require('lowdb')
 var FileSync = require('lowdb/adapters/FileSync')
+var shortid = require('shortid');
 
 // constant
 var app = express()
@@ -28,7 +29,7 @@ app.get('/', function(req, res) {
 })
 
 app.get('/users', function(req, res) {
-	res.render('users', {
+	res.render('users/users', {
 		users: db.get('users').value()
 	})
 })
@@ -37,19 +38,31 @@ app.get('/users/search', function(req, res) {
 	// req.query lay cac parameters duoc truyen vao tu link vi du users/search?q=Cuong
 	var searchValue = req.query.searchValue 
 	var matchedUsers = db.get('users').value().filter(function(user){
-		return user.username.toLowerCase().indexOf(searchValue.toLowerCase()) !== -1
+		return user.name.toLowerCase().indexOf(searchValue.toLowerCase()) !== -1
 	})
-	res.render('users', {
+	res.render('users/users', {
 		users: matchedUsers,
 		searchValue : searchValue
 	})
 })
 
+
+
 app.get ('/users/create', function (req, res) {
-	res.render('create')
+	res.render('users/create')
+})
+
+app.get('/users/:userId', function(req, res){
+	var userId = req.params.userId
+	var user = db.get('users').find({id : userId}).value()
+	res.render('users/userDetail',{
+		user: user
+	})
 })
 
 app.post('/users/create', function(req, res){
+	var id = shortid.generate()
+	req.body.id = id
 	db.get('users').push(req.body).write()
 	res.redirect('/users') // redirect den trang users sau khi post
 })

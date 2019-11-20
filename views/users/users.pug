@@ -8,4 +8,6 @@ form(action='/users/search', method='GET')
 
 ul
 	each user in users
-		li= user.username + ' - ' + user.phone +' - '+ user.email
+		li
+			span= user.name + ' - ' + user.phone +' - '+ user.email
+			a(href='/users/'+user.id) View
