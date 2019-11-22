@@ -1,4 +1,4 @@
-module.exports.postCreate = function(req, res) {
+module.exports.postCreate = function(req, res, next) {
 	var errors = []
 	if(!req.body.name) {
 		errors.push('Name is required!!!')
@@ -14,4 +14,6 @@ module.exports.postCreate = function(req, res) {
 		})
 		return;
 	}
+
+	next(); // di den middleware tip theo
 }

@@ -1,6 +1,6 @@
 // require
 var express = require('express')
-var userRoute= require('./route/user.route.js')
+var cookieParser = require('cookie-parser');
 
 // constant
 var app = express()
@@ -14,10 +14,16 @@ app.set('view engine', 'pug') // set engine dung cho cac file view
 app.use(express.json()) // for parsing application/json
 app.use(express.urlencoded({ extended: true })) // for parsing application/x-www-form-urlencoded
 app.use(express.static('public'))
+app.use(cookieParser())
+//---------------------ENDED CONFIG -----------------------------
+
+//route requrie
+var userRoute= require('./route/user.route.js')
+var loginRoute= require('./route/login.route.js')
 
 // use - route
 app.use('/users', userRoute)
-
+app.use('/login', loginRoute)
 
 // get
 app.get('/', function(req, res) {
