@@ -1,5 +1,6 @@
 var db = require('../lowdb')
 var shortid = require('shortid');
+var md5 = require('md5')
 
 
 module.exports.index = function(req, res) {
@@ -34,7 +35,9 @@ module.exports.userDetail =  function(req, res){
 
 module.exports.postCreate = function(req, res){
 	var id = shortid.generate()
+	console.log(req.body)
 	req.body.id = id
+	req.body.password = md5(req.body.password)
 	db.get('users').push(req.body).write()
 	res.redirect('/users') // redirect den trang users sau khi post
 }

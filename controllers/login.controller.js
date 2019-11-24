@@ -1,4 +1,5 @@
 var db = require('../lowdb')
+var md5 = require('md5')
 
 module.exports.index = function(req, res) {
 	res.render('login/index')
@@ -15,7 +16,8 @@ module.exports.checkLogin = function(req, res){
 		errors.push('Email not exist!!')	
 	}
 
-	var pwd = db.get('users').find({password : pwd}).value()
+	var hashedPassword = md5(pwd)
+	var pwd = db.get('users').find({password : hashedPassword}).value()
 	if (!pwd){
 		errors.push('Wrong password!!')
 	}
@@ -29,8 +31,10 @@ module.exports.checkLogin = function(req, res){
 		return
 	}
 
-	//set cookie
-	res.cookie('userId',user.id)
+	//set signed cookie
+	res.cookie('userId',user.id,{
+		signed: true
+	})
 
 	// neu correct het thi redirect den page users
 	res.redirect('/users');
