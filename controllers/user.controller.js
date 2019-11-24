@@ -1,4 +1,5 @@
 var db = require('../lowdb')
+var db = require('../lowdb')
 var shortid = require('shortid');
 var md5 = require('md5')
 

@@ -1,0 +1,10 @@
+extends ../layout/common
+
+block content
+
+	h1 Products
+	div.col-md-3.border.border-light.rounded.d-flex.flex-column
+		img.d-block(src=products[0].image)
+		span=products[0].description
+		button.btn.btn-primary
+			| Add to cart
