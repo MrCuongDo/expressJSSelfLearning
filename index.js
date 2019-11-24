@@ -1,3 +1,5 @@
+require('dotenv').config()
+
 // require
 var express = require('express')
 var cookieParser = require('cookie-parser');
@@ -14,7 +16,7 @@ app.set('view engine', 'pug') // set engine dung cho cac file view
 app.use(express.json()) // for parsing application/json
 app.use(express.urlencoded({ extended: true })) // for parsing application/x-www-form-urlencoded
 app.use(express.static('public'))
-app.use(cookieParser('cuongdo')) // set up for signed cookie
+app.use(cookieParser(process.env.SESSION_SECRET)) // set up for signed cookie
 //---------------------ENDED CONFIG -----------------------------
 
 //route requrie
