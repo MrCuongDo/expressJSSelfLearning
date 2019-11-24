@@ -3,8 +3,31 @@ extends ../layout/common
 block content
 
 	h1 Products
-	div.col-md-3.border.border-light.rounded.d-flex.flex-column
-		img.d-block(src=products[0].image)
-		span=products[0].description
-		button.btn.btn-primary
-			| Add to cart
+	.card-deck
+		- var count = 0;
+		each product in products
+			- count=count+1;
+			.card.mb-2(style='width: 18rem')
+				img.card-img-top(src=product.image)
+				.card-body
+					h5.card-title=product.name
+					p.card-text=product.description
+				.card-footer
+					a.btn.btn-primary(href='#') Add to cart
+
+			if count == 4
+				- count = 0;
+				.w-100
+
+	nav
+		ul.pagination.justify-content-end
+			li.page-item
+				a.page-link(href='#',tabindex='-1',aria-disabled='true') Previous
+			- var n = 0;
+			while n < totalNumberOfPage
+				- n = n+1;
+				li.page-item(class= (n == currentPage ? 'active' : '') )
+					a.page-link(href='/products?page='+n) #{n}
+			li.page-item
+				a.page-link(href='#') Next
+			
