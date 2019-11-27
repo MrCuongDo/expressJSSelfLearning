@@ -4,6 +4,6 @@ var validateLogin = require('../controllers/validates/validate.login')
 
 var router = express.Router()
 
-router.get('/',validateLogin.requireAuth ,controller.index )
+router.get('/',controller.index )
 
 module.exports = router
