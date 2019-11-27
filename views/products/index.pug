@@ -21,13 +21,27 @@ block content
 
 	nav
 		ul.pagination.justify-content-end
-			li.page-item
-				a.page-link(href='#',tabindex='-1',aria-disabled='true') Previous
+			//- xu ly xuat hien nut previous
+			if (currentPage == 1)
+				li.page-item.disabled
+					a.page-link(href='#',tabindex='-1',aria-disabled='true') Previous
+			else
+				- var previousPage = parseInt(currentPage) - 1;
+				li.page-item
+					a.page-link(href='/products?page='+previousPage) Previous
+
+			//- xu ly xuat hien danh sach cac page
 			- var n = 0;
 			while n < totalNumberOfPage
 				- n = n+1;
 				li.page-item(class= (n == currentPage ? 'active' : '') )
 					a.page-link(href='/products?page='+n) #{n}
-			li.page-item
-				a.page-link(href='#') Next
-			
+					
+			//- xu ly xuat hien nut next
+			if (currentPage == totalNumberOfPage)
+				li.page-item.disabled
+					a.page-link(href='#',tabindex='-1',aria-disabled='true') Next
+			else
+				- var previousPage = parseInt(currentPage) + 1;
+				li.page-item
+					a.page-link(href='/products?page='+previousPage) Next
