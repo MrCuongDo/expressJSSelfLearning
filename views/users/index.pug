@@ -13,12 +13,15 @@ block content
 
 	table.table.table-bordered
 		tr
+			th Avatar
 			th Name
 			th Phone
 			th Email
 			th Action
 		each user in users
 			tr
+				td
+					img(src=user.fileUpload,width=64, height=64)
 				td= user.name 
 				td= user.phone 
 				td= user.email

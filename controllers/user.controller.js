@@ -36,9 +36,9 @@ module.exports.userDetail =  function(req, res){
 
 module.exports.postCreate = function(req, res){
 	var id = shortid.generate()
-	console.log(req.body)
 	req.body.id = id
 	req.body.password = md5(req.body.password)
+	req.body.fileUpload = req.file.path.split('/').slice(1).join('/')
 	db.get('users').push(req.body).write()
 	res.redirect('/users') // redirect den trang users sau khi post
 }

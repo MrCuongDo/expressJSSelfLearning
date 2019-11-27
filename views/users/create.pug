@@ -7,14 +7,25 @@ block content
 		each error in errors
 			.alert.alert-danger= error
 
-	.form-group
-		form(action='/users/create', method='POST')
+	form(action='/users/create', method='POST',enctype='multipart/form-data')
+		form-group
 			label(for='name') Name
 			input#name(type='text', name='name', class='form-control', value= values? values.name : '')
+
+		.form-group
 			label(for='phone') phone
 			input#phone(type='number', name='phone', class='form-control',value= values? values.phone : '')
+
+		.form-group
 			label(for='email') Email
 			input#email(type='email', name='email', class='form-control',value=values?  values.email: '')
+
+		.form-group
 			label(for='password') Password
 			input#password(type='password', name='password', class='form-control',value=values?  values.password: '')
-			button(class='btn btn-danger my-2') Create
+
+		.form-group
+			label(for='fileUpload') Avatar
+			input#fileUpload(type='file', name='fileUpload', class='form-control-file')
+
+		button(class='btn btn-danger my-2') Create
