@@ -1,4 +1,4 @@
-var db = require('../lowdb')
+var User = require('../models/user.model.js');
 var md5 = require('md5')
 
 module.exports.index = function(req, res) {
@@ -11,13 +11,13 @@ module.exports.checkLogin = function(req, res){
 
 	var errors = []
 
-	var user = db.get('users').find({email : email}).value()
+	var user = User.find({email : email});
 	if (!user) {
 		errors.push('Email not exist!!')	
 	}
 
 	var hashedPassword = md5(pwd)
-	var pwd = db.get('users').find({password : hashedPassword}).value()
+	var pwd = User.find({password : hashedPassword});
 	if (!pwd){
 		errors.push('Wrong password!!')
 	}

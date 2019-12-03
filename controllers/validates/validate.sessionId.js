@@ -1,7 +1,7 @@
 var shortid = require('shortid');
-var db = require('../../lowdb')
+var Session = require('../../models/session.model.js');
 
-module.exports = function(req,res, next) {
+module.exports = async function(req,res, next) {
 
 	if(!req.signedCookies.sessionId){
 		var sessionId = shortid.generate();
@@ -11,10 +11,7 @@ module.exports = function(req,res, next) {
 			signed: true
 		})
 
-		// ghi vao database thong tin session Id
-		db.get('sessions').push({
-			id : sessionId
-		}).write();
+		await Session.create({sessionId: sessionId});
 	}
 	next();
 }

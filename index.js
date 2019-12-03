@@ -3,10 +3,21 @@ require('dotenv').config()
 // require
 var express = require('express')
 var cookieParser = require('cookie-parser');
+var mongoose = require('mongoose');
 
 // constant
 var app = express()
 var port = 8080
+
+//-- setup to connect mongoDB
+mongoose.connect(process.env.MONGO_URL, {useNewUrlParser: true ,useUnifiedTopology: true});
+var db = mongoose.connection;
+db.on('error', console.error.bind(console, 'connection error:'));
+db.once('open', function() {
+  // we're connected!
+  console.log('db connection succeed!!');
+});
+//\\--------------------------
 
 // set 
 app.set('views', './views')	// set thu muc goc cua cac file view

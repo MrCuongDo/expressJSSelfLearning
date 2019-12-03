@@ -1,4 +1,4 @@
-var db = require('../../lowdb')
+var User = require('../../models/user.model.js');
 
 module.exports.requireAuth = function(req, res, next) {
 	if(!req.signedCookies.userId) {
@@ -6,7 +6,7 @@ module.exports.requireAuth = function(req, res, next) {
 		return
 	}
 
-	var user = db.get('users').find({id : req.signedCookies.userId}).value()
+	var user = User.find({id : req.signedCookies.userId});
 	if(!user){
 		res.redirect('/login')
 		return

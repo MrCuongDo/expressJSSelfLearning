@@ -1,18 +1,21 @@
-var db = require('../lowdb')
-var shortid = require('shortid');
+var User = require('../models/user.model.js');
 var md5 = require('md5')
 
 
-module.exports.index = function(req, res) {
+module.exports.index = async function(req, res) {
+	// await: doi lay danh sach tat ca user sau do moi render
+	var users = await User.find();
+
 	res.render('users/index', {
-		users: db.get('users').value()
+		users: users
 	})
 }
 
-module.exports.search = function(req, res) {
+module.exports.search =  async function(req, res) {
 	// req.query lay cac parameters duoc truyen vao tu link vi du users/search?q=Cuong
 	var searchValue = req.query.searchValue 
-	var matchedUsers = db.get('users').value().filter(function(user){
+	var users = await User.find();
+	var matchedUsers = users.filter(function(user){
 		return user.name.toLowerCase().indexOf(searchValue.toLowerCase()) !== -1
 	})
 	res.render('users/index', {
@@ -25,19 +28,24 @@ module.exports.create = function (req, res) {
 	res.render('users/create')
 }
 
-module.exports.userDetail =  function(req, res){
+module.exports.userDetail = async function(req, res){
 	var id = req.params.id
-	var user = db.get('users').find({id : id}).value()
+	var user = await User.findById(id);
 	res.render('users/userDetail',{
 		user: user
 	})
 }
 
-module.exports.postCreate = function(req, res){
-	var id = shortid.generate()
-	req.body.id = id
+module.exports.postCreate = async  function(req, res){
 	req.body.password = md5(req.body.password)
 	req.body.fileUpload = req.file.path.split('/').slice(1).join('/')
-	db.get('users').push(req.body).write()
+	var newUser = {
+		email: req.body.email,
+		password: req.body.password,
+		name: req.body.name,
+		fileUpload: req.body.fileUpload,
+		phone: req.body.phone
+	}
+	var user = await User.create(newUser);
 	res.redirect('/users') // redirect den trang users sau khi post
 }
