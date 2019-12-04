@@ -11,6 +11,7 @@ var port = 8080
 
 //-- setup to connect mongoDB
 mongoose.connect(process.env.MONGO_URL, {useNewUrlParser: true ,useUnifiedTopology: true});
+mongoose.set('useFindAndModify', false);
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function() {

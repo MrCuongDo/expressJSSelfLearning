@@ -9,7 +9,7 @@ module.exports.addToCart = async function(req, res, next) {
 		return;
 	}
 
-	//check xem san pham nay co duoc chon chua
+	//check xem san pham nay co duoc chon chua4
 	// var count = Session
 	//   .find({id : sessionId})
 	//   .get('cart.'+productId , 0)
@@ -21,13 +21,19 @@ module.exports.addToCart = async function(req, res, next) {
 	//   .write();
 
 
-	var cart = await Session.findOne({sessionId : sessionId , "cart.productId" : productId}, { _id : 0, cart : 1}, function(err, cart){
+	var query = await Session.findOne({sessionId : sessionId , "cart.productId" : productId}, { _id : 0}, async function(err, query){
 		if (err) return handleError(err);
-		//return cart
-	})
 
-	console.log(typeof cart);
-	console.log(cart.cart[0].quantity);
+		if(query){ 
+			//update so luong sp moi bang cach increment len 1
+			var rs = await Session.findOneAndUpdate({sessionId : sessionId, "cart.productId" : productId}, { $inc: {"cart.$.quantity": 1}})
+		}else{
+			// neu khong co query thi them san pham nay vao cart 
+			var flag = await Session.findOne({sessionId : sessionId}, function(err, query){})
+			flag.cart.push({productId : productId , quantity: 1})
+			flag.save();
+		}
+	})
 
   	res.redirect('/products')
 }
