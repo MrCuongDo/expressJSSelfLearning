@@ -37,6 +37,7 @@ var loginRoute= require('./route/login.route.js')
 var productRoute= require('./route/product.route.js')
 var cartRoute= require('./route/cart.route.js')
 var checkSessionId = require('./controllers/validates/validate.sessionId')
+var apiProductRoute= require("./api/route/product.route")
 
 // use - route
 app.use(checkSessionId) // ceheck Session ID cho tat ca cac duong dan ben duoi
@@ -45,6 +46,7 @@ app.use('/users', userRoute)
 app.use('/login', loginRoute)
 app.use('/products', productRoute)
 app.use('/cart', cartRoute)
+app.use('/api/products', apiProductRoute)
 
 // get
 app.get('/', function(req, res) {
